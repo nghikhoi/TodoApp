@@ -15,14 +15,15 @@
         <ListView
                 android:id="@+id/lvTODOLIST"
                 android:layout_width="match_parent" android:layout_height="459dp"/>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
         <android.widget.Button android:layout_width="60dp" android:layout_height="60dp"
                                android:id="@+id/btnCreateTODO"
                                android:padding="10dp"
                                android:textSize="20dp"
                                android:text="+"
-                               android:layout_marginLeft="350dp"
+                               android:layout_alignParentEnd="true"
                                android:background="@drawable/round_btn"/>
-
+        </RelativeLayout>
     </LinearLayout>
 
 </FrameLayout>
