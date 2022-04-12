@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 public class Page1 extends Fragment {
 
-    private Page1iewModel mViewModel;
+    private Page1ViewModel mViewModel;
     private Button btnCreate;
 
     public static Page1 newInstance() {
@@ -44,7 +44,7 @@ public class Page1 extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(Page1iewModel.class);
+        mViewModel = new ViewModelProvider(this).get(Page1ViewModel.class);
         // TODO: Use the ViewModel
     }
 

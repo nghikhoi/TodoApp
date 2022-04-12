@@ -28,6 +28,7 @@
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textSize="20dp"
+                  android:inputType="date"
                   android:id="@+id/etToDoStartTime"/>
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -37,6 +38,7 @@
         <EditText android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textSize="20dp"
+                  android:inputType="date"
                   android:id="@+id/etToDoEndTime"/>
         <TextView android:layout_width="match_parent"
                   android:layout_height="wrap_content"
@@ -47,12 +49,15 @@
                   android:layout_height="wrap_content"
                   android:textSize="20dp"
                   android:id="@+id/etDescription"/>
-        <Button android:id="@+id/btnSave"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Save"
-                android:textSize="20dp"
-                android:layout_marginLeft="280dp"/>
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+            <Button android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:textSize="20dp"
+                    android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
     </LinearLayout>
 
 </FrameLayout>
