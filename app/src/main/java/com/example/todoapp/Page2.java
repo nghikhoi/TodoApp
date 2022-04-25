@@ -26,10 +26,6 @@ public class Page2 extends Fragment {
     private DatePickerDialog.OnDateSetListener onStartDateSet, onEndDateSet;
     private Calendar startDate, endDate;
 
-    public static Page2 newInstance() {
-        return new Page2();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {

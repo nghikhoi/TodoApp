@@ -17,10 +17,6 @@ public class Page1 extends Fragment {
     private Page1ViewModel mViewModel;
     private Button btnCreate;
 
-    public static Page1 newInstance() {
-        return new Page1();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
