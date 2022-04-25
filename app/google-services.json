@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "48392057690",
+    "project_id": "dulcet-pilot-274814",
+    "storage_bucket": "dulcet-pilot-274814.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48392057690:android:a171df9c1d36e8f80c7963",
+        "android_client_info": {
+          "package_name": "com.example.todoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48392057690-l7n80jiguca79gpe448qcobuu8gkl21l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH_ahc5i_SVmHiU9cWy4Kmp39Msu7u23I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48392057690-l7n80jiguca79gpe448qcobuu8gkl21l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,9 @@
 package com.example.todoapp.database;
 
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.Consumer;
+
 public class TodoManager {
 
     private final IDatabase database;
@@ -15,6 +19,18 @@ public class TodoManager {
             database.init();
             _init = true;
         }
+    }
+
+    public void getTodoIds(Consumer<Set<UUID>> callback) {
+        database.getTodoIds(callback);
+    }
+
+    public void getTodos(Consumer<Set<TodoTask>> callback) {
+        database.getTodos(callback);
+    }
+
+    public void save(TodoTask task) {
+        database.save(task);
     }
 
 }

@@ -5,6 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.todoapp.database.IDatabase;
 import com.example.todoapp.database.TodoTask;
 
@@ -12,11 +16,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class LocalDatabase implements IDatabase {
 
     private static final String DATABASE_NAME = "TodoApp";
-    private static final String TABLE_NAME = "TodoList";
+    private static final String TABLE_NAME = "todolist";
 
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
@@ -41,7 +46,18 @@ public class LocalDatabase implements IDatabase {
         handler.close();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
+    public void getTodoIds(Consumer<Set<UUID>> callback) {
+        callback.accept(getTodoIds());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void getTodos(Consumer<Set<TodoTask>> callback) {
+        callback.accept(getTodos());
+    }
+
     public Set<UUID> getTodoIds() {
         Set<UUID> result = new HashSet<>();
         SQLiteDatabase db = handler.getReadableDatabase();
@@ -56,7 +72,6 @@ public class LocalDatabase implements IDatabase {
         return result;
     }
 
-    @Override
     public Set<TodoTask> getTodos() {
         Set<TodoTask> result = new HashSet<>();
         SQLiteDatabase db = handler.getReadableDatabase();
@@ -79,11 +94,14 @@ public class LocalDatabase implements IDatabase {
     public void save(TodoTask task) {
         SQLiteDatabase db = handler.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, task.getId().toString());
+        values.put(KEY_TITLE, task.getTitle());
         values.put(KEY_DESCRIPTION, task.getDescription());
         values.put(KEY_STARTTIME, task.getStartTime().getTime());
         values.put(KEY_ENDTIME, task.getEndTime().getTime());
-        db.update(TABLE_NAME, values, null, null);
+        if (db.update(TABLE_NAME, values, KEY_ID + " = ?", new String[] { task.getId().toString() }) == 0) {
+            values.put(KEY_ID, task.getId().toString());
+            db.insert(TABLE_NAME, null, values);
+        };
     }
 
     private static class DatabaseHandler extends SQLiteOpenHelper {
@@ -96,7 +114,7 @@ public class LocalDatabase implements IDatabase {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            String create_students_table = String.format("CREATE TABLE %s(%s TEXT PRIMARY KEY, %s TEXT, %s TEXT, %s UNSIGNED BIG INT, %s UNSIGNED BIG INT)", TABLE_NAME, KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_STARTTIME, KEY_ENDTIME);
+            String create_students_table = String.format("CREATE TABLE %s (%s TEXT PRIMARY KEY, %s TEXT, %s TEXT, %s UNSIGNED BIG INT, %s UNSIGNED BIG INT)", TABLE_NAME, KEY_ID, KEY_TITLE, KEY_DESCRIPTION, KEY_STARTTIME, KEY_ENDTIME);
             db.execSQL(create_students_table);
         }
 

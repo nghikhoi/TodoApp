@@ -2,36 +2,43 @@ package com.example.todoapp;
 
 import android.app.DatePickerDialog;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.text.SimpleDateFormat;
+import com.example.todoapp.database.TodoTask;
+
 import java.util.Calendar;
+import java.util.Date;
 
-public class Page2 extends Fragment {
+public class EditFragment extends Fragment {
 
-    private Page2ViewModel mViewModel;
     private Button btnSave;
-    private EditText etStartTime,etEndTime;
+    private EditText etTitle, etDescription;
+    private EditText etStartTime, etEndTime;
     private DatePickerDialog.OnDateSetListener onStartDateSet, onEndDateSet;
     private Calendar startDate, endDate;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.page2_fragment, container, false);
+        View v = inflater.inflate(R.layout.edit_fragment, container, false);
 
-        etStartTime =v.findViewById(R.id.etToDoStartTime);
+        etTitle = v.findViewById(R.id.etTitle);
+        etDescription = v.findViewById(R.id.etDescription);
+        etStartTime = v.findViewById(R.id.etToDoStartTime);
         etEndTime = v.findViewById(R.id.etToDoEndTime);
         btnSave = v.findViewById(R.id.btnSave);
 
@@ -49,39 +56,29 @@ public class Page2 extends Fragment {
             etEndTime.setText(endDate.get(Calendar.DATE) + "/" + endDate.get(Calendar.MONTH) + "/" + endDate.get(Calendar.YEAR));
         };
 
-        etStartTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utils.pickDate(getActivity(),onStartDateSet);
-            }
-        });
+        etStartTime.setOnClickListener(view -> Utils.pickDate(getActivity(), onStartDateSet));
 
-        etEndTime.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Utils.pickDate(getActivity(),onEndDateSet);
-            }
-        });
+        etEndTime.setOnClickListener(view -> Utils.pickDate(getActivity(), onEndDateSet));
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.fragmentContainerView,Page1.class,null).commit();
-            }
+        btnSave.setOnClickListener(view -> {
+            save();
+
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragmentContainerView, ListFragment.class, null).commit();
         });
 
         return v;
     }
 
+    private void save() {
+        String title = etTitle.getText().toString();
+        String desc = etDescription.getText().toString();
+        Date start = startDate.getTime();
+        Date end = endDate.getTime();
+        TodoTask task = new TodoTask(title, start, end, desc);
 
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(Page2ViewModel.class);
-        // TODO: Use the ViewModel
+        ((MainActivity) getActivity()).getTodoManager().save(task);
     }
 
 }

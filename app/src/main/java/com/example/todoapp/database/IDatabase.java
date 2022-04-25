@@ -2,6 +2,7 @@ package com.example.todoapp.database;
 
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public interface IDatabase {
 
@@ -9,9 +10,9 @@ public interface IDatabase {
 
     void shutdown();
 
-    Set<UUID> getTodoIds();
+    void getTodoIds(Consumer<Set<UUID>> callback);
 
-    Set<TodoTask> getTodos();
+    void getTodos(Consumer<Set<TodoTask>> callback);
 
     void save(TodoTask task);
 
